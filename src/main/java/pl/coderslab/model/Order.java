@@ -5,14 +5,14 @@ import java.sql.Date;
 public class Order {
 
     private int id;
-    private Date receive;
+    private Date received;
     private Date planned;
     private Date started;
-    private Employee employee;
+    private int employee_id;
     private String problem;
     private String repair;
-    private String status;
-    private Vehicle vehicle;
+    private int status_id;
+    private int vehicle_id;
     private double cost;
     private double parts;
     private double employeeSalary;
@@ -21,15 +21,15 @@ public class Order {
     public Order() {
     }
 
-    public Order(Date receive, Date planned, Date started, Employee employee, String problem, String repair, String status, Vehicle vehicle, double cost, double parts, double employeeSalary, double time) {
-        this.receive = receive;
+    public Order(Date received, Date planned, Date started, int employee_id, String problem, String repair, int status_id, int vehicle_id, double cost, double parts, double employeeSalary, double time) {
+        this.received = received;
         this.planned = planned;
         this.started = started;
-        this.employee = employee;
+        this.employee_id = employee_id;
         this.problem = problem;
         this.repair = repair;
-        this.status = status;
-        this.vehicle = vehicle;
+        this.status_id = status_id;
+        this.vehicle_id = vehicle_id;
         this.cost = cost;
         this.parts = parts;
         this.employeeSalary = employeeSalary;
@@ -44,12 +44,12 @@ public class Order {
         this.id = id;
     }
 
-    public Date getReceive() {
-        return receive;
+    public Date getReceived() {
+        return received;
     }
 
-    public void setReceive(Date receive) {
-        this.receive = receive;
+    public void setReceived(Date received) {
+        this.received = received;
     }
 
     public Date getPlanned() {
@@ -68,12 +68,12 @@ public class Order {
         this.started = started;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public int getEmployee_id() {
+        return employee_id;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployee_id(int employee_id) {
+        this.employee_id = employee_id;
     }
 
     public String getProblem() {
@@ -92,20 +92,20 @@ public class Order {
         this.repair = repair;
     }
 
-    public String getStatus() {
-        return status;
+    public int getStatus_id() {
+        return status_id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus_id(int status_id) {
+        this.status_id = status_id;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public int getVehicle_id() {
+        return vehicle_id;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setVehicle_id(int vehicle_id) {
+        this.vehicle_id = vehicle_id;
     }
 
     public double getCost() {

@@ -10,16 +10,18 @@ public class Vehicle {
     private int year;
     private String registration;
     private Date inspection;
+    private int customer_id;
 
     public Vehicle() {
     }
 
-    public Vehicle(String brand, String model, int year, String registration, Date inspection) {
+    public Vehicle(String brand, String model, int year, String registration, Date inspection, int vehicle_id) {
         this.brand = brand;
         this.model = model;
         this.year = year;
         this.registration = registration;
         this.inspection = inspection;
+        this.customer_id = customer_id;
     }
 
     public int getId() {
@@ -68,5 +70,13 @@ public class Vehicle {
 
     public void setInspection(Date inspection) {
         this.inspection = inspection;
+    }
+
+    public int getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setVehicle_id(int customer_id) {
+        this.customer_id = customer_id;
     }
 }
