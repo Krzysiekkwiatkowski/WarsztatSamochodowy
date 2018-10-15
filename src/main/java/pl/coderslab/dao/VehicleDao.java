@@ -1,7 +1,6 @@
 package pl.coderslab.dao;
 
 import pl.coderslab.DbUtil;
-import pl.coderslab.model.Customer;
 import pl.coderslab.model.Vehicle;
 
 import java.sql.*;

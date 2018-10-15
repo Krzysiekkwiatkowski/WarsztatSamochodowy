@@ -21,6 +21,27 @@ public class Order {
     public Order() {
     }
 
+    public Order(Date received, Date planned, String problem, String repair, int status_id, int vehicle_id) {
+        this.received = received;
+        this.planned = planned;
+        this.problem = problem;
+        this.repair = repair;
+        this.status_id = status_id;
+        this.vehicle_id = vehicle_id;
+    }
+
+    public Order(Date received, Date planned, Date started, int employee_id, String problem, String repair, int status_id, int vehicle_id, double employeeSalary) {
+        this.received = received;
+        this.planned = planned;
+        this.started = started;
+        this.employee_id = employee_id;
+        this.problem = problem;
+        this.repair = repair;
+        this.status_id = status_id;
+        this.vehicle_id = vehicle_id;
+        this.employeeSalary = employeeSalary;
+    }
+
     public Order(Date received, Date planned, Date started, int employee_id, String problem, String repair, int status_id, int vehicle_id, double cost, double parts, double employeeSalary, double time) {
         this.received = received;
         this.planned = planned;
