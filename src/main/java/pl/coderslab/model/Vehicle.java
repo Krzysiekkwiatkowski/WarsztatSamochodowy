@@ -15,7 +15,15 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(String brand, String model, int year, String registration, Date inspection, int vehicle_id) {
+    public Vehicle(String brand, String model, int year, String registration, int customer_id) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.registration = registration;
+        this.customer_id = customer_id;
+    }
+
+    public Vehicle(String brand, String model, int year, String registration, Date inspection, int customer_id) {
         this.brand = brand;
         this.model = model;
         this.year = year;
@@ -76,7 +84,7 @@ public class Vehicle {
         return customer_id;
     }
 
-    public void setVehicle_id(int customer_id) {
+    public void setCustomer_id(int customer_id) {
         this.customer_id = customer_id;
     }
 }
