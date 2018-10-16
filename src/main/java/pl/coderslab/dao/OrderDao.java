@@ -13,7 +13,8 @@ public class OrderDao {
     private static String EDIT_ORDER = "UPDATE orders SET received = ?, planned = ?, started = ?, employee_id = ?, problem = ?, repair = ?, status_id = ?, vehicle_id = ?, cost = ?, parts = ?, employee_salary = ?, time = ? WHERE id = ?";
     private static String DELETE_ORDER = "DELETE FROM orders WHERE id = ?";
     private static String LOAD_ORDER_BY_ID = "SELECT * FROM orders WHERE id = ?";
-    private static String LOAD_ORDERS_BY_EMPLOYEE_ID = "select orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE orders.employee_id = ?";
+    private static String LOAD_ORDERS_BY_EMPLOYEE_ID = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE orders.employee_id = ?";
+    private static String LOAD_ORDERS_BY_CUSTOMER_ID = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE vehicles.customer_id = ?";
     private static String LOAD_ALL_ORDERS = "SELECT * FROM orders";
     private static String LOAD_ALL_ACTIVE_ORDERS = "select orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE status_id < 4;";
 
@@ -219,6 +220,38 @@ public class OrderDao {
             e.printStackTrace();
         }
         return employeeOrders;
+    }
+
+    public static ArrayList<ActiveOrder> loadByCustomerId(int id) {
+        ArrayList<ActiveOrder> customerOrders = new ArrayList<>();
+        try {
+            Connection connection = DbUtil.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(LOAD_ORDERS_BY_CUSTOMER_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ActiveOrder customerOrder = new ActiveOrder();
+                customerOrder.setId(resultSet.getInt("id"));
+                customerOrder.setReceived(resultSet.getDate("received"));
+                customerOrder.setPlanned(resultSet.getDate("planned"));
+                if(resultSet.getDate("started") != null){
+                    customerOrder.setStarted(resultSet.getDate("started"));
+                }
+                if(resultSet.getString("problem") != null) {
+                    customerOrder.setProblem(resultSet.getString("problem"));
+                }
+                if(resultSet.getString("repair") != null) {
+                    customerOrder.setRepair(resultSet.getString("repair"));
+                }
+                customerOrder.setStatus(resultSet.getString("status"));
+                customerOrder.setBrand(resultSet.getString("brand"));
+                customerOrder.setModel(resultSet.getString("model"));
+                customerOrders.add(customerOrder);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerOrders;
     }
 
     public static ArrayList<Order> loadAll() {

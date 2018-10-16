@@ -12,6 +12,7 @@ public class VehicleDao {
     private static String EDIT_VEHICLE = "UPDATE vehicles SET brand = ?, model = ?, year = ?, registration = ?, inspection =?, customer_id = ? WHERE id = ?";
     private static String DELETE_VEHICLE = "DELETE FROM vehicles WHERE id = ?";
     private static String LOAD_VEHICLE_BY_ID = "SELECT * FROM vehicles WHERE id = ?";
+    private static String LOAD_VEHICLES_BY_CUSTOMER_ID = "SELECT * FROM vehicles WHERE customer_id = ?";
     private static String LOAD_ALL_VEHICLES = "SELECT * FROM vehicles";
 
     public Vehicle createVehicle(Vehicle vehicle){
@@ -96,6 +97,31 @@ public class VehicleDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static ArrayList<Vehicle> loadByCustomerId(int id){
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
+        try {
+            Connection connection = DbUtil.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(LOAD_VEHICLES_BY_CUSTOMER_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Vehicle vehicle = new Vehicle();
+                vehicle.setId(resultSet.getInt("id"));
+                vehicle.setBrand(resultSet.getString("brand"));
+                vehicle.setModel(resultSet.getString("model"));
+                vehicle.setYear(resultSet.getInt("year"));
+                vehicle.setRegistration(resultSet.getString("registration"));
+                if(resultSet.getDate("inspection") != null){
+                    vehicle.setInspection(resultSet.getDate("inspection"));
+                }
+                vehicles.add(vehicle);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return vehicles;
     }
 
     public static ArrayList<Vehicle> loadAll(){
