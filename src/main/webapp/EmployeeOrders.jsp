@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: oem
-  Date: 14.10.18
-  Time: 17:44
+  Date: 16.10.18
+  Time: 18:38
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,7 +14,7 @@
 <body>
 <%@ include file="header.jsp" %>
 </br></br>
-Aktualnie prowadzone naprawy:</br>
+Zlecenia pracownika:</br>
 <table border="1px solid black" style="text-align: center">
     <tr>
         <th> Id </th>
@@ -27,17 +27,17 @@ Aktualnie prowadzone naprawy:</br>
         <th> Brand </th>
         <th> Model </th>
     </tr>
-    <c:forEach items="${activeOrders}" var="activeOrder">
+    <c:forEach items="${employeeOrders}" var="employeeOrder">
         <tr>
-            <td> ${activeOrder.id} </td>
-            <td> ${activeOrder.received} </td>
-            <td> ${activeOrder.planned} </td>
-            <td> ${activeOrder.started} </td>
-            <td> ${activeOrder.problem} </td>
-            <td> ${activeOrder.repair} </td>
-            <td> ${activeOrder.status} </td>
-            <td> ${activeOrder.brand} </td>
-            <td> ${activeOrder.model} </td>
+            <td> ${employeeOrder.id} </td>
+            <td> ${employeeOrder.received} </td>
+            <td> ${employeeOrder.planned} </td>
+            <td> ${employeeOrder.started} </td>
+            <td> ${employeeOrder.problem} </td>
+            <td> ${employeeOrder.repair} </td>
+            <td> ${employeeOrder.status} </td>
+            <td> ${employeeOrder.brand} </td>
+            <td> ${employeeOrder.model} </td>
         </tr>
     </c:forEach>
 </table>

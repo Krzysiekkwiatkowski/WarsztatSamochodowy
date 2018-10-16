@@ -13,7 +13,7 @@
 </head>
 <body>
 <footer>
-    <h3> Stopka informacyjna </h3>
+    <h5> Mail: <a href="#" > info@praca.pl </a></h5> Telefon: +48 508 789 456
 </footer>
 </body>
 </html>

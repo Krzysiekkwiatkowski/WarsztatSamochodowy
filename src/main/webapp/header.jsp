@@ -10,10 +10,12 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
-    <h3>Header: <a href="#" > Linki nawigacyjne </a></h3>
+    <h5> <a href="http://localhost:8080/WarsztatSamochodowy" > Strona główna </a> / <a href="#" > Klienci </a> / <a href="#" > Zlecenia </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Employees" > Pracownicy </a> / <a href="#" > Raporty </a></h5>
 </header>
 </body>
 </html>

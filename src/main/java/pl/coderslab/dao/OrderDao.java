@@ -1,6 +1,7 @@
 package pl.coderslab.dao;
 
 import pl.coderslab.DbUtil;
+import pl.coderslab.model.ActiveOrder;
 import pl.coderslab.model.Order;
 
 import java.sql.*;
@@ -12,7 +13,9 @@ public class OrderDao {
     private static String EDIT_ORDER = "UPDATE orders SET received = ?, planned = ?, started = ?, employee_id = ?, problem = ?, repair = ?, status_id = ?, vehicle_id = ?, cost = ?, parts = ?, employee_salary = ?, time = ? WHERE id = ?";
     private static String DELETE_ORDER = "DELETE FROM orders WHERE id = ?";
     private static String LOAD_ORDER_BY_ID = "SELECT * FROM orders WHERE id = ?";
+    private static String LOAD_ORDERS_BY_EMPLOYEE_ID = "select orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE orders.employee_id = ?";
     private static String LOAD_ALL_ORDERS = "SELECT * FROM orders";
+    private static String LOAD_ALL_ACTIVE_ORDERS = "select orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE status_id < 4;";
 
     public Order createOrder(Order order) {
         String[] generatedColumns = {"ID"};
@@ -186,6 +189,38 @@ public class OrderDao {
         return null;
     }
 
+    public static ArrayList<ActiveOrder> loadByEmployeeId(int id) {
+        ArrayList<ActiveOrder> employeeOrders = new ArrayList<>();
+        try {
+            Connection connection = DbUtil.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(LOAD_ORDERS_BY_EMPLOYEE_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ActiveOrder employeeOrder = new ActiveOrder();
+                employeeOrder.setId(resultSet.getInt("id"));
+                employeeOrder.setReceived(resultSet.getDate("received"));
+                employeeOrder.setPlanned(resultSet.getDate("planned"));
+                if(resultSet.getDate("started") != null){
+                    employeeOrder.setStarted(resultSet.getDate("started"));
+                }
+                if(resultSet.getString("problem") != null) {
+                    employeeOrder.setProblem(resultSet.getString("problem"));
+                }
+                if(resultSet.getString("repair") != null) {
+                    employeeOrder.setRepair(resultSet.getString("repair"));
+                }
+                employeeOrder.setStatus(resultSet.getString("status"));
+                employeeOrder.setBrand(resultSet.getString("brand"));
+                employeeOrder.setModel(resultSet.getString("model"));
+                employeeOrders.add(employeeOrder);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employeeOrders;
+    }
+
     public static ArrayList<Order> loadAll() {
         ArrayList<Order> orders = new ArrayList<>();
         try {
@@ -229,5 +264,36 @@ public class OrderDao {
             e.printStackTrace();
         }
         return orders;
+    }
+
+    public static ArrayList<ActiveOrder> loadAllActive() {
+        ArrayList<ActiveOrder> activeOrders = new ArrayList<>();
+        try {
+            Connection connection = DbUtil.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(LOAD_ALL_ACTIVE_ORDERS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ActiveOrder activeOrder = new ActiveOrder();
+                activeOrder.setId(resultSet.getInt("id"));
+                activeOrder.setReceived(resultSet.getDate("received"));
+                activeOrder.setPlanned(resultSet.getDate("planned"));
+                if(resultSet.getDate("started") != null){
+                    activeOrder.setStarted(resultSet.getDate("started"));
+                }
+                if(resultSet.getString("problem") != null) {
+                    activeOrder.setProblem(resultSet.getString("problem"));
+                }
+                if(resultSet.getString("repair") != null) {
+                    activeOrder.setRepair(resultSet.getString("repair"));
+                }
+                activeOrder.setStatus(resultSet.getString("status"));
+                activeOrder.setBrand(resultSet.getString("brand"));
+                activeOrder.setModel(resultSet.getString("model"));
+                activeOrders.add(activeOrder);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activeOrders;
     }
 }
