@@ -16,7 +16,8 @@ public class OrderDao {
     private static String LOAD_ORDERS_BY_EMPLOYEE_ID = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE orders.employee_id = ?";
     private static String LOAD_ORDERS_BY_CUSTOMER_ID = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE vehicles.customer_id = ?";
     private static String LOAD_ALL_ORDERS = "SELECT * FROM orders";
-    private static String LOAD_ALL_ACTIVE_ORDERS = "select orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE status_id < 4;";
+    private static String LOAD_ALL_ACTIVE_ORDERS = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE status_id < 4;";
+    private static String LOAD_BASIC_ORDERS = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id=vehicles.id";
     private static String LOAD_HISTORY = "SELECT id, received, started, problem, repair, cost FROM orders WHERE status_id = 4 AND vehicle_id = ?";
 
     public Order createOrder(Order order) {
@@ -305,6 +306,37 @@ public class OrderDao {
         try {
             Connection connection = DbUtil.getConn();
             PreparedStatement preparedStatement = connection.prepareStatement(LOAD_ALL_ACTIVE_ORDERS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                ActiveOrder activeOrder = new ActiveOrder();
+                activeOrder.setId(resultSet.getInt("id"));
+                activeOrder.setReceived(resultSet.getDate("received"));
+                activeOrder.setPlanned(resultSet.getDate("planned"));
+                if(resultSet.getDate("started") != null){
+                    activeOrder.setStarted(resultSet.getDate("started"));
+                }
+                if(resultSet.getString("problem") != null) {
+                    activeOrder.setProblem(resultSet.getString("problem"));
+                }
+                if(resultSet.getString("repair") != null) {
+                    activeOrder.setRepair(resultSet.getString("repair"));
+                }
+                activeOrder.setStatus(resultSet.getString("status"));
+                activeOrder.setBrand(resultSet.getString("brand"));
+                activeOrder.setModel(resultSet.getString("model"));
+                activeOrders.add(activeOrder);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activeOrders;
+    }
+
+    public static ArrayList<ActiveOrder> loadBasicOrders() {
+        ArrayList<ActiveOrder> activeOrders = new ArrayList<>();
+        try {
+            Connection connection = DbUtil.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(LOAD_BASIC_ORDERS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 ActiveOrder activeOrder = new ActiveOrder();
