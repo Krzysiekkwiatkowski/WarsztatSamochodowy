@@ -23,6 +23,8 @@ Pojazdy:</br>
         <th> Year </th>
         <th> Registration </th>
         <th> Inspection </th>
+        <th> Szczegóły </th>
+        <th> Action </th>
     </tr>
     <c:forEach items="${vehicles}" var="vehicle">
         <tr>
@@ -32,9 +34,12 @@ Pojazdy:</br>
             <td> ${vehicle.year} </td>
             <td> ${vehicle.registration} </td>
             <td> ${vehicle.inspection} </td>
+            <td> <a href="http://localhost:8080/WarsztatSamochodowy/CustomerVehicles?id=${param.id}&action=edit&vehicleId=${vehicle.id}"> Edytuj </a> </td>
+            <td> <a href="http://localhost:8080/WarsztatSamochodowy/CustomerVehicles?id=${param.id}&action=edit&vehicleId=${vehicle.id}"> Edytuj </a> / <a href="http://localhost:8080/WarsztatSamochodowy/CustomerVehicles?id=${param.id}&action=delete&vehicleId=${vehicle.id}"> Usuń </a> </td>
         </tr>
     </c:forEach>
 </table>
+<a href="http://localhost:8080/WarsztatSamochodowy/CustomerVehicles?id=1&action=add"> Dodaj pojazd </a>
 </br></br>
 <%@include file="footer.jsp" %>
 </body>
