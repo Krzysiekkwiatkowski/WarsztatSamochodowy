@@ -17,7 +17,7 @@ public class OrderDao {
     private static String LOAD_ORDERS_BY_CUSTOMER_ID = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE vehicles.customer_id = ?";
     private static String LOAD_ALL_ORDERS = "SELECT * FROM orders";
     private static String LOAD_ALL_ACTIVE_ORDERS = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE status_id < 4;";
-    private static String LOAD_BASIC_ORDERS = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id=vehicles.id";
+    private static String LOAD_BASIC_ORDERS = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id=vehicles.id ORDER BY id";
     private static String LOAD_HISTORY = "SELECT id, received, started, problem, repair, cost FROM orders WHERE status_id = 4 AND vehicle_id = ?";
 
     public Order createOrder(Order order) {
@@ -176,13 +176,13 @@ public class OrderDao {
                     order.setCost(resultSet.getDouble("cost"));
                 }
                 if (resultSet.getDouble("parts") != 0.0) {
-                    order.setCost(resultSet.getDouble("parts"));
+                    order.setParts(resultSet.getDouble("parts"));
                 }
                 if (resultSet.getDouble("employee_salary") != 0.0) {
-                    order.setCost(resultSet.getDouble("employee_salary"));
+                    order.setEmployeeSalary(resultSet.getDouble("employee_salary"));
                 }
                 if (resultSet.getDouble("time") != 0.0) {
-                    order.setCost(resultSet.getDouble("time"));
+                    order.setTime(resultSet.getDouble("time"));
                 }
                 return order;
             }
@@ -285,13 +285,13 @@ public class OrderDao {
                     order.setCost(resultSet.getDouble("cost"));
                 }
                 if (resultSet.getDouble("parts") != 0.0) {
-                    order.setCost(resultSet.getDouble("parts"));
+                    order.setParts(resultSet.getDouble("parts"));
                 }
                 if (resultSet.getDouble("employee_salary") != 0.0) {
-                    order.setCost(resultSet.getDouble("employee_salary"));
+                    order.setEmployeeSalary(resultSet.getDouble("employee_salary"));
                 }
                 if (resultSet.getDouble("time") != 0.0) {
-                    order.setCost(resultSet.getDouble("time"));
+                    order.setTime(resultSet.getDouble("time"));
                 }
                 orders.add(order);
             }
