@@ -17,6 +17,7 @@ public class OrderDao {
     private static String LOAD_ORDERS_BY_CUSTOMER_ID = "SELECT orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model FROM orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE vehicles.customer_id = ?";
     private static String LOAD_ALL_ORDERS = "SELECT * FROM orders";
     private static String LOAD_ALL_ACTIVE_ORDERS = "select orders.id, orders.received, orders.planned, orders.started, orders.problem, orders.repair, status.status, vehicles.brand, vehicles.model from orders JOIN status ON orders.status_id=status.id JOIN vehicles ON orders.vehicle_id= vehicles.id WHERE status_id < 4;";
+    private static String LOAD_HISTORY = "SELECT id, received, started, problem, repair, cost FROM orders WHERE status_id = 4 AND vehicle_id = ?";
 
     public Order createOrder(Order order) {
         String[] generatedColumns = {"ID"};
@@ -328,5 +329,36 @@ public class OrderDao {
             e.printStackTrace();
         }
         return activeOrders;
+    }
+
+    public static ArrayList<Order> loadHistory(int vehicle_id) {
+        ArrayList<Order> history = new ArrayList<>();
+        try {
+            Connection connection = DbUtil.getConn();
+            PreparedStatement preparedStatement = connection.prepareStatement(LOAD_HISTORY);
+            preparedStatement.setInt(1, vehicle_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Order order = new Order();
+                order.setId(resultSet.getInt("id"));
+                order.setReceived(resultSet.getDate("received"));
+                if(resultSet.getDate("started") != null){
+                    order.setStarted(resultSet.getDate("started"));
+                }
+                if(resultSet.getString("problem") != null) {
+                    order.setProblem(resultSet.getString("problem"));
+                }
+                if(resultSet.getString("repair") != null) {
+                    order.setRepair(resultSet.getString("repair"));
+                }
+                if (resultSet.getDouble("cost") != 0.0) {
+                    order.setCost(resultSet.getDouble("cost"));
+                }
+                history.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return history;
     }
 }

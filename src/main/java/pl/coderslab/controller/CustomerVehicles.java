@@ -1,6 +1,8 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.OrderDao;
 import pl.coderslab.dao.VehicleDao;
+import pl.coderslab.model.Order;
 import pl.coderslab.model.Vehicle;
 
 import javax.servlet.ServletException;
@@ -93,6 +95,14 @@ public class CustomerVehicles extends HttpServlet {
             int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
             VehicleDao.deleteVehicle(vehicleId);
             response.sendRedirect("/WarsztatSamochodowy/CustomerVehicles?id=" + id);
+        } else if(action.equals("history")) {
+            int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
+            Vehicle vehicle = VehicleDao.loadById(vehicleId);
+            ArrayList<Order> history = OrderDao.loadHistory(vehicleId);
+            request.setAttribute("vehicle", vehicle);
+            request.setAttribute("history", history);
+            getServletContext().getRequestDispatcher("/History.jsp")
+                    .forward(request, response);
         }
     }
 }
