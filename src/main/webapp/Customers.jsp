@@ -14,6 +14,10 @@
 <body>
 <%@ include file="header.jsp" %>
 </br></br>
+<form action="/WarsztatSamochodowy/Customers?search=" method="get">
+    <input type="text" name="search">
+    <input type="submit" value="Wyszukaj">
+</form>
 Klienci:</br>
 <table border="1px solid black" style="text-align: center">
     <tr>

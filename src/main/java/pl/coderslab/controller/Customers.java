@@ -39,11 +39,19 @@ public class Customers extends HttpServlet {
         response.setContentType("text/html");
         response.setCharacterEncoding("UtF-8");
         String action = request.getParameter("action");
+        String search = request.getParameter("search");
         if(action == null){
-            ArrayList<Customer> customers = CustomerDao.loadAll();
-            request.setAttribute("customers", customers);
-            getServletContext().getRequestDispatcher("/Customers.jsp")
-                    .forward(request, response);
+            if(search == null) {
+                ArrayList<Customer> customers = CustomerDao.loadAll();
+                request.setAttribute("customers", customers);
+                getServletContext().getRequestDispatcher("/Customers.jsp")
+                        .forward(request, response);
+            } else {
+                ArrayList<Customer> customers = CustomerDao.loadAllMatch(search);
+                request.setAttribute("customers", customers);
+                getServletContext().getRequestDispatcher("/Customers.jsp")
+                        .forward(request, response);
+            }
         } else if(action.equals("add")){
             response.getWriter().append("<form action=\"/WarsztatSamochodowy/Customers\" method=\"post\">\n" +
                     "    Name: <input type=\"text\" name=\"name\">\n" +

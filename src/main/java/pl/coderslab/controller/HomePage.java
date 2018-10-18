@@ -2,7 +2,6 @@ package pl.coderslab.controller;
 
 import pl.coderslab.dao.OrderDao;
 import pl.coderslab.model.ActiveOrder;
-import pl.coderslab.model.Order;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
