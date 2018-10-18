@@ -15,7 +15,7 @@
 </head>
 <body>
 <header>
-    <h5> <a href="http://localhost:8080/WarsztatSamochodowy" > Strona główna </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Customers" > Klienci </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Orders" > Zlecenia </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Employees" > Pracownicy </a> / <a href="#" > Raporty </a></h5>
+    <h5> <a href="http://localhost:8080/WarsztatSamochodowy" > Strona główna </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Customers" > Klienci </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Orders" > Zlecenia </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Employees" > Pracownicy </a> / <a href="http://localhost:8080/WarsztatSamochodowy/Raports" > Raporty </a></h5>
 </header>
 </body>
 </html>
