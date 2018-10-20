@@ -39,7 +39,7 @@ Pojazdy:</br>
         </tr>
     </c:forEach>
 </table>
-<a href="http://localhost:8080/WarsztatSamochodowy/CustomerVehicles?id=1&action=add"> Dodaj pojazd </a>
+<a href="http://localhost:8080/WarsztatSamochodowy/CustomerVehicles?id=${param.id}&action=add"> Dodaj pojazd </a>
 </br></br>
 <%@include file="footer.jsp" %>
 </body>

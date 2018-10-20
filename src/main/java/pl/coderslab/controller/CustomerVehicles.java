@@ -35,6 +35,7 @@ public class CustomerVehicles extends HttpServlet {
                 inspection = Date.valueOf(stringInspection);
             }
             vehicle.setInspection(inspection);
+            vehicle.setCustomer_id(customer_id);
             VehicleDao vehicleDao = new VehicleDao();
             vehicleDao.createVehicle(vehicle);
         } else {
@@ -50,6 +51,7 @@ public class CustomerVehicles extends HttpServlet {
             vehicle.setYear(year);
             vehicle.setRegistration(registration);
             vehicle.setInspection(inspection);
+            vehicle.setCustomer_id(customer_id);
             VehicleDao vehicleDao = new VehicleDao();
             vehicleDao.editVehicle(vehicle);
         }
